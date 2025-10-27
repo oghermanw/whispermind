@@ -2,22 +2,22 @@ import { NextRequest, NextResponse } from 'next/server'
 import { spawn } from 'child_process'
 import { join } from 'path'
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   return await testLocalWhisper()
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   return await testLocalWhisper()
 }
 
-async function testLocalWhisper() {
+async function testLocalWhisper(): Promise<NextResponse> {
   try {
     console.log('🧪 測試本地 Whisper...')
     
     // 檢查 Python 環境
     const pythonPath = join(process.cwd(), 'whisper-env', 'bin', 'python')
     
-    return new Promise((resolve) => {
+    return new Promise<NextResponse>((resolve) => {
       const childProcess = spawn(pythonPath, ['-c', 'import whisper; print("Whisper 可用")'], {
         cwd: process.cwd(),
         stdio: ['pipe', 'pipe', 'pipe']
