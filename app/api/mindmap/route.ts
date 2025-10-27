@@ -2,9 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { MindMapData } from '@/types'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+function getOpenAI() {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY environment variable is not set')
+  }
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  })
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,6 +44,7 @@ export async function POST(request: NextRequest) {
     const systemPrompt = getSystemPrompt(language || 'en')
 
     // 使用 GPT-4 生成思維導圖結構
+    const openai = getOpenAI()
     const completion = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
