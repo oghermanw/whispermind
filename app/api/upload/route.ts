@@ -90,10 +90,17 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('文件上傳錯誤:', error)
-    console.error('錯誤堆棧:', error.stack)
-    return NextResponse.json({ 
-      success: false, 
-      message: `文件上傳失敗: ${error.message}` 
-    }, { status: 500 })
+    if (error instanceof Error) {
+      console.error('錯誤堆棧:', error.stack)
+      return NextResponse.json({ 
+        success: false, 
+        message: `文件上傳失敗: ${error.message}` 
+      }, { status: 500 })
+    } else {
+      return NextResponse.json({ 
+        success: false, 
+        message: '文件上傳失敗: 未知錯誤' 
+      }, { status: 500 })
+    }
   }
 }
