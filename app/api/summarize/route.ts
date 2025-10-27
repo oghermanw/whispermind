@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
     // 如果沒有找到關鍵要點，嘗試從摘要中提取
     if (keyPoints.length === 0) {
       // 嘗試從原始回應中提取關鍵要點
-      const keyPointsMatch = response.match(/關鍵要點[：:]\s*(.+?)(?:\n\n|\n$|$)/s)
+      const keyPointsMatch = response.match(/關鍵要點[：:]\s*(.+?)(?:\n\n|\n$|$)/)
       if (keyPointsMatch) {
         const keyPointsText = keyPointsMatch[1]
         const points = keyPointsText.split(/[1-9]\./).filter(p => p.trim().length > 0)
