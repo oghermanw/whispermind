@@ -1,0 +1,10 @@
+# Whisper Large V3 本地服務依賴
+transformers>=4.35.0
+torch>=2.0.0
+torchaudio>=2.0.0
+accelerate>=0.20.0
+librosa>=0.10.0
+soundfile>=0.12.0
+
+
+
